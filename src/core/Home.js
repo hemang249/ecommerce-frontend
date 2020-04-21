@@ -1,9 +1,7 @@
 import React from "react";
+import "../styles.css";
+import Base from "./Base.jsx";
 
 export default function Home() {
-  return (
-    <div>
-      <h1>Hello front end</h1>
-    </div>
-  );
+  return <Base></Base>;
 }
