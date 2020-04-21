@@ -9,10 +9,12 @@ const Base = (props) => {
     <div>
       <Menu />
       <div className="container-fluid">
-        <div className="jumbotron text-center">
-          <h2 className="display-6">{title}</h2>
-          <p className="lead">{description}</p>
-        </div>
+        {props.showHeader && (
+          <div className="jumbotron text-center">
+            <h2 className="display-6">{title}</h2>
+            <p className="lead">{description}</p>
+          </div>
+        )}
 
         <div className={className}>{props.children}</div>
       </div>

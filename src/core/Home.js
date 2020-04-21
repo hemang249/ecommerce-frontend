@@ -3,5 +3,5 @@ import "../styles.css";
 import Base from "./Base.jsx";
 
 export default function Home() {
-  return <Base></Base>;
+  return <Base showHeader={true}></Base>;
 }

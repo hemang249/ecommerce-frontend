@@ -1,0 +1,38 @@
+import { API } from "../../config";
+
+export const createCategory = (userId, token, name) => {
+  return fetch(`${API}/category/${userId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name: name }),
+  })
+    .then((data) => data.json())
+    .catch((err) => console.log(err));
+};
+
+export const getAllCategories = () => {
+  return fetch(`${API}/category/all`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((data) => data.json())
+    .catch((err) => console.log(err));
+};
+
+export const deleteCategory = (userId, token, categoryId) => {
+  return fetch(`${API}/category/${categoryId}/${userId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((data) => data)
+    .catch((err) => console.log(err));
+};

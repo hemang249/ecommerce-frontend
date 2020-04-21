@@ -4,6 +4,10 @@
   border-radius: 0px;
 }
 
+.admin-nav li:hover {
+  cursor: pointer;
+}
+
 body {
   background: #eaf0f1;
 }

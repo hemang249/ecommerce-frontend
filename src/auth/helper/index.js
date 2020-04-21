@@ -26,24 +26,18 @@ export const signin = (user) => {
     .catch((err) => console.log(err));
 };
 
-export const signout = (next) => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("token");
-    next();
-
-    return fetch(`${API}/auth/signout`, {
-      method: "GET",
-    })
-      .then((res) => console.log("sign out successfull"))
-      .catch((err) => console.log(err));
-  }
+export const signout = () => {
+  localStorage.removeItem("token");
+  return fetch(`${API}/auth/signout`, {
+    method: "GET",
+  })
+    .then((res) => console.log("sign out successfull"))
+    .catch((err) => console.log(err));
 };
 
 export const authenticate = (data, next) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("token", JSON.stringify(data));
-    next();
-  }
+  localStorage.setItem("token", JSON.stringify(data));
+  next();
 };
 
 export const isAuthenticated = () => {
