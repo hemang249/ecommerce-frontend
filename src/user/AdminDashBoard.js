@@ -45,13 +45,13 @@ const AdminDashboard = () => {
         <h4 className="card-header text-center">
           {rightPanelComponent.toUpperCase()}
         </h4>
-        {rightPanelComponent === "category"
-          ? Categories()
-          : rightPanelComponent === "product"
-          ? Products()
-          : rightPanelComponent === "order"
-          ? Orders()
-          : null}
+        {rightPanelComponent === "category" ? (
+          <Categories />
+        ) : rightPanelComponent === "product" ? (
+          <Products />
+        ) : rightPanelComponent === "order" ? (
+          <Orders />
+        ) : null}
       </div>
     );
   };

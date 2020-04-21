@@ -4,13 +4,15 @@ import {
   deleteCategory,
   createCategory,
   getAllCategories,
+  updateCategory,
 } from "./helper/adminapicall";
 
 export default function Categories() {
-  const [name, setName] = useState(null);
+  const [name, setName] = useState("");
+  const [updatedName, setUpdatedName] = useState("");
   const [categories, setCategories] = useState([]);
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [toBeUpdated, setToBeUpdated] = useState(false);
+  const [categoryToBeUpdated, setCategoryToBeUpdated] = useState(null);
   const { user, token } = isAuthenticated();
 
   useEffect(() => {
@@ -19,8 +21,12 @@ export default function Categories() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleChange = (event) => {
+  const createUpdateHandler = (event) => {
     setName(event.target.value);
+  };
+
+  const updateUpdateHandler = (event) => {
+    setUpdatedName(event.target.value);
   };
 
   const onCreateClick = (event) => {
@@ -35,6 +41,25 @@ export default function Categories() {
       .catch((err) => console.log(err));
   };
 
+  const onUpdateClick = (event) => {
+    event.preventDefault();
+    console.log(categoryToBeUpdated);
+    updateCategory(user._id, token, categoryToBeUpdated, name)
+      .then((res) => {
+        console.log(res);
+        getAllCategories()
+          .then((data) => setCategories(data))
+          .catch((err) => console.log(err));
+        setToBeUpdated(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const updateToBeUpdated = (categoryId) => {
+    setCategoryToBeUpdated(categoryId);
+    setToBeUpdated(true);
+  };
+
   const onDeleteCategory = (categoryId) => {
     deleteCategory(user._id, token, categoryId)
       .then((data) =>
@@ -43,6 +68,32 @@ export default function Categories() {
           .catch((err) => console.log(err))
       )
       .catch((err) => console.log(err));
+  };
+
+  const updateCategoryForm = () => {
+    return (
+      <div className="my-4">
+        <form>
+          <div className="form-group">
+            <p className="lead">Update Category</p>
+            <input
+              type="text"
+              className="form-control my-3 "
+              required
+              placeholder="Enter updated name"
+              value={updatedName}
+              onChange={updateUpdateHandler}
+            />
+            <button
+              onClick={() => onUpdateClick()}
+              className="btn btn-outline-info"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    );
   };
 
   const createCategoryForm = () => {
@@ -57,7 +108,7 @@ export default function Categories() {
               required
               placeholder="Summer"
               value={name}
-              onChange={handleChange}
+              onChange={createUpdateHandler}
             />
             <button onClick={onCreateClick} className="btn btn-outline-info">
               Create
@@ -79,7 +130,12 @@ export default function Categories() {
         >
           Delete
         </button>{" "}
-        <button className="btn btn-sm btn-warning mx-4">Update</button>{" "}
+        <button
+          onClick={() => updateToBeUpdated(c._id)}
+          className="btn btn-sm btn-warning mx-4"
+        >
+          Update
+        </button>{" "}
       </li>
     ));
   };
@@ -92,6 +148,7 @@ export default function Categories() {
           <ul className="list-group">{categoryList()}</ul>
         </div>
         {createCategoryForm()}
+        {toBeUpdated && updateCategoryForm()}
       </div>
     </div>
   );

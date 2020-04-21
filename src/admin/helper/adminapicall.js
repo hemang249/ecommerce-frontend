@@ -36,3 +36,18 @@ export const deleteCategory = (userId, token, categoryId) => {
     .then((data) => data)
     .catch((err) => console.log(err));
 };
+
+export const updateCategory = (userId, token, categoryId, name) => {
+  return fetch(`${API}/category/${categoryId}/${userId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: {
+      name: name,
+    },
+  })
+    .then((data) => data.json())
+    .catch((err) => console.log(err));
+};

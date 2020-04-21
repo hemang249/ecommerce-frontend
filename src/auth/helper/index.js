@@ -42,7 +42,6 @@ export const authenticate = (data, next) => {
 
 export const isAuthenticated = () => {
   if (localStorage.getItem("token")) {
-    console.log(localStorage.getItem("token"));
     return JSON.parse(localStorage.getItem("token"));
   } else {
     return false;
