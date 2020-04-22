@@ -4,15 +4,23 @@ import Menu from "./Menu";
 const Base = (props) => {
   const title = "C0DERS";
   const description = "We are a clothing store for geeks to top up their swag.";
-  const className = "p-4";
+  const className = "";
   return (
     <div>
       <Menu />
       <div className="container-fluid">
         {props.showHeader && (
-          <div className="jumbotron text-center">
-            <h2 className="display-6">{title}</h2>
-            <p className="lead">{description}</p>
+          <div
+            className="jumbotron text-center"
+            style={{
+              backgroundImage:
+                "url('https://ak0.picdn.net/shutterstock/videos/1012305950/thumb/1.jpg')",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <h2 className="display-6 text-white">{title}</h2>
+            <p className="lead text-white">{description}</p>
           </div>
         )}
 

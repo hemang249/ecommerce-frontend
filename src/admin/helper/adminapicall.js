@@ -51,3 +51,17 @@ export const updateCategory = (userId, token, categoryId, name) => {
     .then((data) => data.json())
     .catch((err) => console.log(err));
 };
+
+// Product Calls
+export const createProduct = (userId, token, product) => {
+  fetch(`${API}/product/${userId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: product,
+  })
+    .then((data) => data.json())
+    .catch((err) => console.log(err));
+};
