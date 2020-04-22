@@ -4,7 +4,7 @@ import { isAuthenticated, signout } from "../auth/helper/index";
 
 const Menu = () => {
   return (
-    <div>
+    <div className="sticky-top">
       <ul className="nav bg-primary text-white nav-tabs">
         <li className="nav-item ">
           <Link className="nav-link text-white" to="/">

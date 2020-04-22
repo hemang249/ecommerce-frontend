@@ -9,8 +9,12 @@ export default function Home() {
   const [loading, setLoading] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     getAllProducts()
-      .then((data) => setProducts(data))
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -38,5 +42,22 @@ export default function Home() {
     return <div>{content}</div>;
   };
 
-  return <Base showHeader={true}>{renderCardList()}</Base>;
+  return (
+    <Base showHeader={true}>
+      <div className="text-center">
+        {loading && (
+          <div class="loadingio-spinner-spinner-rx58km545up">
+            {" "}
+            <div class="ldio-cvkrl33lsmo">
+              {" "}
+              <div> </div> <div> </div> <div> </div> <div> </div> <div> </div>{" "}
+              <div> </div> <div> </div> <div> </div> <div> </div> <div> </div>{" "}
+              <div> </div> <div> </div>{" "}
+            </div>{" "}
+          </div>
+        )}
+      </div>
+      {renderCardList()}
+    </Base>
+  );
 }
