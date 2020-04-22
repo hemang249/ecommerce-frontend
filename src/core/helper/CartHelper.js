@@ -8,8 +8,8 @@ export const addItemToCart = (product, count) => {
   localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-export const getItemsFormCart = () => {
-  if(localStorage.getItem("cart")) {
-    return localStorage.getItem("cart")
+export const getItemsFromCart = () => {
+  if (localStorage.getItem("cart")) {
+    return JSON.parse(localStorage.getItem("cart"));
   }
-}
+};

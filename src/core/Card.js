@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import Thumbnail from "./helper/Thumbnail";
-import { addItemToCart } from "./helper/CartHelper";
+import { addItemToCart, getItemsFromCart } from "./helper/CartHelper";
 const Card = ({ product }) => {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(0);
 
+  useEffect(() => {
+    let products = getItemsFromCart();
+    if (products)
+      if (products[product._id]) {
+        setCount(products[product._id].count);
+      }
+  }, []);
+
   const onAddToCartClick = () => {
     setCount(count + 1);
-    addItemToCart(product, count);
+    console.log(count);
+    addItemToCart(product, count + 1);
   };
 
   const onRemoveCartClick = () => {
