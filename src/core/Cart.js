@@ -1,14 +1,19 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { getItemsFromCart } from "./helper/CartHelper";
+import { getItemsFromCart, createOrder } from "./helper/CartHelper";
 import Base from "./Base";
 import Card from "./Card";
+import { Redirect } from "react-router-dom";
 import Stripe from "react-stripe-checkout";
 import { isAuthenticated } from "../auth/helper";
 import { Link } from "react-router-dom";
+import { API, STRIPE_KEY } from "../config";
 
 export default function Cart() {
   const [productsInCart, setProductsInCart] = useState({});
   const [total, setTotal] = useState(0);
+  const [success, setSuccess] = useState(false);
+  const [address, setAddress] = useState("");
+  const { user, authToken } = isAuthenticated();
   useEffect(() => {
     setProductsInCart(getItemsFromCart());
   }, []);
@@ -31,6 +36,39 @@ export default function Cart() {
       content.push(<Card product={value.product} />);
     });
     return <Fragment>{content}</Fragment>;
+  };
+
+  const makePayment = (token) => {
+    setAddress({
+      city: token.card.address_city,
+      street: token.card.address_line1,
+      country: token.card.address_country,
+    });
+    const body = {
+      token,
+      amount: total * 100,
+    };
+
+    const headers = {
+      "Content-type": "application/json",
+    };
+
+    fetch(`${API}/stripe`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    })
+      .then((res) => {
+        res.json();
+      })
+      .then((res) => {
+        createOrder(user._id, authToken, total, address).then((data) => {
+          console.log(data);
+          localStorage.removeItem("cart");
+          setSuccess(true);
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   const renderProductInvoice = () => {
@@ -90,9 +128,10 @@ export default function Cart() {
           {isAuthenticated() ? (
             <Stripe
               name="C0DERS Clothing"
+              stripeKey="pk_test_E1j6fsqMDJg1nJUWBS4O6kVN00Ml4rt39d"
               shippingAddress
               billingAddress
-              token=""
+              token={makePayment}
             >
               <button className="btn btn-success btn-lg">
                 Proceed To Pay ($ {total})
@@ -115,6 +154,7 @@ export default function Cart() {
 
   return (
     <Base showHeader={false}>
+      {success ? <Redirect to="/" /> : null}
       <h1 className="text-center my-4">Your Cart</h1>
       <div className="row">
         <div className="col-md-4">{renderCartItems()}</div>
