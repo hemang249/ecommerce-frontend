@@ -28,11 +28,12 @@ export const createOrder = (userId, token, amount, address) => {
     });
   });
 
-  return fetch(`${API}/order`, {
+  return fetch(`${API}/order/${userId}`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       order: {

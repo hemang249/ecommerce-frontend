@@ -13,7 +13,7 @@ export default function Cart() {
   const [total, setTotal] = useState(0);
   const [success, setSuccess] = useState(false);
   const [address, setAddress] = useState("");
-  const { user, authToken } = isAuthenticated();
+
   useEffect(() => {
     setProductsInCart(getItemsFromCart());
   }, []);
@@ -62,7 +62,12 @@ export default function Cart() {
         res.json();
       })
       .then((res) => {
-        createOrder(user._id, authToken, total, address).then((data) => {
+        createOrder(
+          isAuthenticated().user._id,
+          isAuthenticated().token,
+          total,
+          address
+        ).then((data) => {
           console.log(data);
           localStorage.removeItem("cart");
           setSuccess(true);
