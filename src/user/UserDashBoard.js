@@ -10,11 +10,43 @@ const UserDashboard = () => {
     getAllOrders(user._id, token)
       .then((data) => {
         console.log(data);
-        setOrders(data);
+        setOrders(data.orders);
       })
       .catch((err) => console.log(err));
   }, []);
-  return <Base>User dashbaord</Base>;
+
+  const renderOrderList = () => {
+    return orders.map((o) => (
+      <div className="card">
+        <div className="row p-4">
+          <div className="col-md-12">
+            <p className="card-text">
+              <strong>Order ID </strong>: {o._id}
+            </p>
+            <p className="card-text">
+              <strong>Date Ordered </strong>: {o.createdAt.substring(0, 10)}
+            </p>
+
+            <p className="card-text">
+              <strong>Amount</strong> : ${o.amount}
+            </p>
+            <p className="card-text">
+              <strong>TransactionId</strong>: {o.transactionId}
+            </p>
+          </div>
+        </div>
+      </div>
+    ));
+  };
+
+  return (
+    <Base>
+      <div className="fluid-container my-4">
+        <h2 className="card-title text-center">Your Orders</h2>
+        {renderOrderList()}
+      </div>
+    </Base>
+  );
 };
 
 export default UserDashboard;
