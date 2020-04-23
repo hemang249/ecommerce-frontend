@@ -9,11 +9,13 @@ import Profile from "./user/Profile";
 import PrivateRoute from "./auth/helper/PrivateRoutes";
 import AdminRoute from "./auth/helper/AdminRoutes";
 import Cart from "./core/Cart";
+import Api from "./api-docs/Api";
 
 const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <Route path="/api-docs" exact component={Api} />
         <Route path="/" exact component={Home} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/signin" exact component={Signin} />

@@ -24,17 +24,19 @@ export default function Cart() {
 
   const computeTotal = () => {
     let myTotal = 0;
-    Object.entries(productsInCart).forEach(([key, value]) => {
-      myTotal += value.count * value.product.price;
-    });
+    if (productsInCart)
+      Object.entries(productsInCart).forEach(([key, value]) => {
+        myTotal += value.count * value.product.price;
+      });
     return myTotal;
   };
 
   const renderCartItems = () => {
     const content = [];
-    Object.entries(productsInCart).forEach(([key, value]) => {
-      content.push(<Card product={value.product} />);
-    });
+    if (productsInCart)
+      Object.entries(productsInCart).forEach(([key, value]) => {
+        content.push(<Card product={value.product} />);
+      });
     return <Fragment>{content}</Fragment>;
   };
 
@@ -80,17 +82,18 @@ export default function Cart() {
     const content = [];
     let i = 1;
     let myTotal = 0;
-    Object.entries(productsInCart).forEach(([key, value]) => {
-      myTotal += value.count * value.product.price;
-      content.push(
-        <tr>
-          <th scope="row">{i++}</th>
-          <td>{value.product.name}</td>
-          <td>{value.count}</td>
-          <td>$ {value.product.price * value.count}</td>
-        </tr>
-      );
-    });
+    if (productsInCart)
+      Object.entries(productsInCart).forEach(([key, value]) => {
+        myTotal += value.count * value.product.price;
+        content.push(
+          <tr>
+            <th scope="row">{i++}</th>
+            <td>{value.product.name}</td>
+            <td>{value.count}</td>
+            <td>$ {value.product.price * value.count}</td>
+          </tr>
+        );
+      });
     return <Fragment>{content}</Fragment>;
   };
 
