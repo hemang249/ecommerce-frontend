@@ -10,6 +10,7 @@ import { API, STRIPE_KEY } from "../config";
 
 export default function Cart() {
   const [productsInCart, setProductsInCart] = useState({});
+  const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [success, setSuccess] = useState(false);
   const [address, setAddress] = useState("");
@@ -41,6 +42,7 @@ export default function Cart() {
   };
 
   const makePayment = (token) => {
+    setLoading(true);
     setAddress({
       city: token.card.address_city,
       street: token.card.address_line1,
@@ -72,6 +74,7 @@ export default function Cart() {
         ).then((data) => {
           console.log(data);
           localStorage.removeItem("cart");
+          setLoading(false);
           setSuccess(true);
         });
       })
@@ -134,17 +137,25 @@ export default function Cart() {
 
         <div class="card-body text-center">
           {isAuthenticated() ? (
-            <Stripe
-              name="C0DERS Clothing"
-              stripeKey="pk_test_E1j6fsqMDJg1nJUWBS4O6kVN00Ml4rt39d"
-              shippingAddress
-              billingAddress
-              token={makePayment}
-            >
-              <button className="btn btn-success btn-lg">
-                Proceed To Pay ($ {total})
-              </button>
-            </Stripe>
+            <>
+              <Stripe
+                name="C0DERS Clothing"
+                stripeKey="pk_test_E1j6fsqMDJg1nJUWBS4O6kVN00Ml4rt39d"
+                shippingAddress
+                billingAddress
+                token={makePayment}
+              >
+                <button className="btn btn-success btn-lg">
+                  Proceed To Pay ($ {total})
+                </button>
+              </Stripe>
+              {loading && (
+                <div>
+                  <p>Please Do not Exit, Your transaction is in process...</p>
+                  <div class="loader"></div>
+                </div>
+              )}
+            </>
           ) : (
             <div>
               <Link to="/signin">

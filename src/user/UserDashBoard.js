@@ -6,11 +6,14 @@ import { isAuthenticated } from "../auth/helper";
 const UserDashboard = () => {
   const [orders, setOrders] = useState([]);
   const { user, token } = isAuthenticated();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     getAllOrders(user._id, token)
       .then((data) => {
         console.log(data);
         setOrders(data.orders);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -43,6 +46,7 @@ const UserDashboard = () => {
     <Base>
       <div className="fluid-container my-4">
         <h2 className="card-title text-center">Your Orders</h2>
+        {loading && <div class="loader">Loading...</div>}
         {renderOrderList()}
       </div>
     </Base>

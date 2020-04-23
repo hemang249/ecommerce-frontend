@@ -45,17 +45,7 @@ export default function Home() {
   return (
     <Base showHeader={true}>
       <div className="text-center">
-        {loading && (
-          <div class="loadingio-spinner-spinner-rx58km545up">
-            {" "}
-            <div class="ldio-cvkrl33lsmo">
-              {" "}
-              <div> </div> <div> </div> <div> </div> <div> </div> <div> </div>{" "}
-              <div> </div> <div> </div> <div> </div> <div> </div> <div> </div>{" "}
-              <div> </div> <div> </div>{" "}
-            </div>{" "}
-          </div>
-        )}
+        {loading && <div class="loader">Loading...</div>}
       </div>
       {renderCardList()}
     </Base>
