@@ -13,6 +13,7 @@ const UserDashboard = () => {
       .then((data) => {
         console.log(data);
         setOrders(data.orders);
+
         setLoading(false);
       })
       .catch((err) => console.log(err));
