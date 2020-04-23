@@ -21,20 +21,26 @@ export default function Home() {
   const renderCardList = () => {
     let content = [];
     let len = products.length;
+
     let iterations = Math.ceil(len / 3);
-    console.log(iterations);
     for (let i = 0; i < iterations; i++) {
       content.push(
         <div className="row">
-          <div className="col-md-4">
-            <Card product={products[3 * i + 0]} />
-          </div>
-          <div className="col-md-4">
-            <Card product={products[3 * i + 1]} />
-          </div>
-          <div className="col-md-4">
-            <Card product={products[3 * i + 2]} />
-          </div>
+          {products[3 * i] && (
+            <div className="col-md-4">
+              <Card product={products[3 * i + 0]} />
+            </div>
+          )}
+          {products[3 * i + 1] && (
+            <div className="col-md-4">
+              <Card product={products[3 * i + 1]} />
+            </div>
+          )}
+          {products[3 * i + 2] && (
+            <div className="col-md-4">
+              <Card product={products[3 * i + 2]} />
+            </div>
+          )}
         </div>
       );
     }

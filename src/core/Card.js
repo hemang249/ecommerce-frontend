@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 import Thumbnail from "./helper/Thumbnail";
 import { addItemToCart, getItemsFromCart } from "./helper/CartHelper";
 const Card = ({ product }) => {
-  const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const Card = ({ product }) => {
 
   return (
     <div className="card text-white bg-primary border border-info my-4 ">
-      <div className="card-header lead">{product.name}</div>
+      <div className="card-header lead">Temp</div>
       <div className="card-body">
         <Thumbnail product={product} />
         <p className="lead  font-weight-normal text-wrap">
