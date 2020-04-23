@@ -16,6 +16,7 @@ const UserDashboard = () => {
 
         setLoading(false);
       })
+
       .catch((err) => console.log(err));
   }, []);
 
