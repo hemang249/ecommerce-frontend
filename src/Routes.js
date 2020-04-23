@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 import Home from "./core/Home";
 import Signup from "./user/Signup";
 import Signin from "./user/Signin";
@@ -13,7 +13,7 @@ import Api from "./api-docs/Api";
 
 const Routes = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route path="/api-docs" exact component={Api} />
         <Route path="/" exact component={Home} />
@@ -24,7 +24,7 @@ const Routes = () => {
         <Route path="/user/cart" exact component={Cart} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
